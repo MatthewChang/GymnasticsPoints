@@ -1,15 +1,17 @@
 <?php
 $pw = "bigredwill";
+
 if(array_key_exists("adminpw",$_POST) and $_POST["adminpw"] == $pw){
 	
 	echo "<h1>Change Points</h1>";
-	$mysqli = new mysqli("127.0.0.1", "root", "", "db");
+	$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 	if ($mysqli->connect_errno) {
 		echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 	}
 	if(array_key_exists("user",$_POST)) {
 		$user = $_POST["user"];
-		$query = 'insert into points values('.$user.',2,'.$_POST["pc"].',NOW());';
+		$reason = $_POST["reason"];
+		$query = 'insert into points values('.$user.',"'.$reason.'",'.$_POST["pc"].',NOW());';
 		$result = $mysqli->query($query);
 		if($result == 1) {
 			echo "<h3>Updated Successfully</h3>";
@@ -44,6 +46,7 @@ if(array_key_exists("adminpw",$_POST) and $_POST["adminpw"] == $pw){
 	}
 	
 	echo '</select><br>Point Change: <input name="pc">';
+	echo '<br>Reason: <input name="reason">';
 	echo '<br>PW:<input name="adminpw" type="password"> <button type="submit">Submit</button>';
 	echo '</form>';
 	

@@ -8,8 +8,9 @@ th, td {
 }
 </style>
 <?php
+$pw = "bigredwill";
 echo "<h1>View Points</h1>";
-$mysqli = new mysqli("127.0.0.1", "root", "", "db");
+$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 if ($mysqli->connect_errno) {
 	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
 }
@@ -37,7 +38,7 @@ if(array_key_exists("user",$_GET)) {
 	$query = 'select * from points where p_id = '.$user.';';
 	if ($result = $mysqli->query($query)) {
 		while ($row = $result->fetch_assoc()) {
-			echo '<tr><td>'.$row["t_id"].'</td>'.'<td>'.$row["points"].'</td>'.'<td>'.$row["time"].'</td></tr>';
+			echo '<tr><td>'.$row["type"].'</td>'.'<td>'.$row["points"].'</td>'.'<td>'.$row["time"].'</td></tr>';
 		}
 		$result->free();
 	}
