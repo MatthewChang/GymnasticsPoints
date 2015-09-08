@@ -2,7 +2,7 @@
 $pw = "bigredwill";
 
 if(array_key_exists("adminpw",$_POST) and $_POST["adminpw"] == $pw){
-	
+	echo '<title>Gymnastics Admin Page</title>';
 	echo "<h1>Change Points</h1>";
 	$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 	if ($mysqli->connect_errno) {

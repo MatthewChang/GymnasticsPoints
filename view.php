@@ -25,6 +25,7 @@ if ($result = $mysqli->query("select p_id, name from people;")) {
 //print_r($people);
 
 if(array_key_exists("user",$_GET)) {
+	echo '<title>Gymnastics Points View</title>';
 	$user = $_GET["user"];
 	$query = 'select sum(points) as total from points where p_id = '.$user.';';
 	//echo $query;

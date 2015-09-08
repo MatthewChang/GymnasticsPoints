@@ -22,6 +22,7 @@ date_default_timezone_set('America/New_York');
 
 if((array_key_exists("pw",$_POST) and $_POST["pw"] == $pw) or (array_key_exists("pw",$_COOKIE) and $_COOKIE["pw"] == $pw)){
 	setcookie("pw",$pw,time()+(24 * 3600 * 1000));
+	echo '<title>Gymnastics Practice Sign In</title>';
 	echo "<h1>Practice Sign In</h1>";
 	$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 	if ($mysqli->connect_errno) {
