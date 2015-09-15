@@ -7,7 +7,7 @@ points(
 	p_id INT NOT NULL,
 	type VARCHAR(255) NOT NULL,
 	points INT NOT NULL,
-	time DATE
+	time DATETIME
 );
 
 people(
@@ -46,12 +46,15 @@ if((array_key_exists("pw",$_POST) and $_POST["pw"] == $pw) or (array_key_exists(
 		$result->free();
 	}
 	
+	if(date('Hi') > "1730") {
+				echo "<b>You are now late.</b>";
+	}
 	
 	if(array_key_exists("user",$_POST)) {
 		$user = $_POST["user"];
 		if(!in_array($user,$signed_in)){
 			$query = 'insert into points values('.$user.',"PRACTICE",2,NOW());';
-			echo date('Hi');
+			#echo date('Hi');
 			if(date('Hi') > "1730") {
 				$query = 'insert into points values('.$user.',"LATE",1,NOW());';
 			}			
