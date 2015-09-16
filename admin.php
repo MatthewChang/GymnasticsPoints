@@ -33,7 +33,7 @@ if(array_key_exists("adminpw",$_POST) and $_POST["adminpw"] == $pw){
 	
 	
 	$people = [];
-	if ($result = $mysqli->query("select p_id, name from people;")) {
+	if ($result = $mysqli->query("select p_id, name from people order by name;")) {
 		while ($row = $result->fetch_assoc()) {
 			$people[$row["p_id"]] = $row["name"];
 		}

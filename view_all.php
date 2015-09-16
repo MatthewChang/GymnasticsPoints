@@ -29,34 +29,17 @@ if ($result = $mysqli->query("select p_id, name from people;")) {
 }
 //print_r($people);
 
-if(array_key_exists("user",$_GET)) {
-	echo '<title>Gymnastics Points View</title>';
-	$user = $_GET["user"];
-	$query = 'select sum(points) as total from points where p_id = '.$user.';';
-	//echo $query;
-	if ($result = $mysqli->query($query)) {
-		while ($row = $result->fetch_assoc()) {
-			echo $people[$user]." - Total Points: ".$row["total"].'<br>';
-		}
-		$result->free();
-	}
-	echo '<table><tr><td>Type</td><td>Points</td><td>Time</td></tr>';
-	$query = 'select * from points where p_id = '.$user.';';
-	if ($result = $mysqli->query($query)) {
-		while ($row = $result->fetch_assoc()) {
-			echo '<tr><td>'.$row["type"].'</td>'.'<td>'.$row["points"].'</td>'.'<td>'.$row["time"].'</td></tr>';
-		}
-		$result->free();
-	}
-	echo '</table>';
-} else {
+echo '<title>Gymnastics Points View</title>';
+$query = 'select people.name, sum(points.points) as total from points inner join people on people.p_id = points.p_id group by points.p_id order by total DESC';
 
-	echo '<form action="view.php" method="GET"><select name="user">';
-	foreach(array_keys($people) as $id) {
-		echo '<option value="'.$id.'">'.$people[$id].'</option>';
+echo '<table><tr><td>Name</td><td>Points</td><td>Time</td></tr>';
+if ($result = $mysqli->query($query)) {
+	while ($row = $result->fetch_assoc()) {
+		echo '<tr><td>'.$row["name"].'</td>'.'<td>'.$row["total"].'</td>'.'<td>'."uh".'</td></tr>';
 	}
-	echo ' </select><button type="submit">Submit</button>';
-	echo '</form>';
+	$result->free();
 }
+echo '</table>';
+
 
 ?>
