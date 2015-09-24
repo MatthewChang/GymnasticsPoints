@@ -6,9 +6,20 @@ function login() {
 		method: "POST",
 		data: {user: $("#user_id").val()}
 	}).done(function() {
-		alert("done");
+		get_signed_in();
 	});
 }
+
+function get_signed_in() {
+	$.ajax({
+		url: "signed_in.php"
+	}).done(function(msg) {
+		$("#signed_in").html(msg);
+	});
+}
+$( document ).ready(function() {
+  get_signed_in();
+});
 </script>
 <?php
 /*
@@ -47,7 +58,8 @@ if ($result = $mysqli->query("select p_id, name from people order by name;")) {
 		$people[$row["p_id"]] = $row["name"];
 	}
 	$result->free();
-}	
+}
+
 $not_signed_in = array_keys($people);
 $signed_in = [];
 $keys = [];
@@ -66,20 +78,19 @@ if(array_key_exists("user",$_POST)) {
 		}
 	}
 }
-
 if(date('Hi') > "1730") {
 			echo "<b>You are now late.</b>";
 }
 
 if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time;')) {
 	while ($row = $result->fetch_assoc()) {
-}
 		array_push($signed_in,$row["p_id"]);
 		array_push($keys,$row["entry_key"]);
 		array_push($times,$row["time"]);
 	}
 	$result->free();
 }
+
 
 $not_signed_in = array_diff(array_keys($people),$signed_in);
 echo '<form action="#"><select name="user">';
@@ -89,8 +100,9 @@ foreach($not_signed_in as $id) {
 echo ' </select><button onclick="login()">Submit</button>';
 echo '</form>';
 echo "<h3>Signed In</h3>";
-for($i = 0; $i < sizeof($signed_in); $i++) {
+echo '<div id="signed_in"></div>';
+/*for($i = 0; $i < sizeof($signed_in); $i++) {
 	echo $people[$signed_in[$i]].' '.$times[$i];	
 	echo '<br>';
-}
+}*/
 ?>
