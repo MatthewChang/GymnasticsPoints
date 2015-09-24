@@ -1,15 +1,3 @@
-<script type="text/javascript" src="jquery-1.11.3.min.js"></script>
-<script type="text/javascript">
-function login() {
-	$.ajax({
-		url: "signin.php",
-		method: "POST",
-		data: {user: $("#user_id").val()}
-	}).done(function() {
-		alert("done");
-	});
-}
-</script>
 <?php
 /*
 MIT Gymnastics point entry site:
@@ -34,8 +22,6 @@ people(
 $pw = "bigredwill";
 date_default_timezone_set('America/New_York');
 
-echo '<title>Gymnastics Practice Sign In</title>';
-echo "<h1>Practice Sign In</h1>";
 $mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 if ($mysqli->connect_errno) {
 	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
@@ -58,39 +44,16 @@ if(array_key_exists("user",$_POST)) {
 
 	if ($result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$user.';')) {
 		if($result->num_rows == 0) {
+			#echo "here2";
 			$query = 'insert into points (p_id,type,points,time) values('.$user.',"PRACTICE",2,NOW());';
+			#echo date('Hi');
 			if(date('Hi') > "1730") {
 				$query = 'insert into points (p_id,type,points,time) values('.$user.',"LATE",1,NOW());';
 			}
+			#echo "here3";
 			$result = $mysqli->query($query);
 		}
+		#echo "here4";
 	}
-}
-
-if(date('Hi') > "1730") {
-			echo "<b>You are now late.</b>";
-}
-
-if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time;')) {
-	while ($row = $result->fetch_assoc()) {
-}
-		array_push($signed_in,$row["p_id"]);
-		array_push($keys,$row["entry_key"]);
-		array_push($times,$row["time"]);
-	}
-	$result->free();
-}
-
-$not_signed_in = array_diff(array_keys($people),$signed_in);
-echo '<form action="#"><select name="user">';
-foreach($not_signed_in as $id) {
-	echo '<option id="user_id" value="'.$id.'">'.$people[$id].'</option>';
-}
-echo ' </select><button onclick="login()">Submit</button>';
-echo '</form>';
-echo "<h3>Signed In</h3>";
-for($i = 0; $i < sizeof($signed_in); $i++) {
-	echo $people[$signed_in[$i]].' '.$times[$i];	
-	echo '<br>';
 }
 ?>
