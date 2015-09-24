@@ -40,20 +40,23 @@ $keys = [];
 $times = [];
 
 if(array_key_exists("user",$_POST)) {
+	
 	$user = $_POST["user"];
-
-	if ($result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$user.';')) {
+	$id = 0;
+	if ($result = $mysqli->query('select p_id from people where name = "'.$user.'";')) {
+		while ($row = $result->fetch_assoc()) {
+			$id = $row["p_id"];
+		}
+		$result->free();
+	}
+	if ($id > 0 and $result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$id.';')) {
 		if($result->num_rows == 0) {
-			#echo "here2";
-			$query = 'insert into points (p_id,type,points,time) values('.$user.',"PRACTICE",2,NOW());';
-			#echo date('Hi');
+			$query = 'insert into points (p_id,type,points,time) values('.$id.',"PRACTICE",2,NOW());';
 			if(date('Hi') > "1730") {
-				$query = 'insert into points (p_id,type,points,time) values('.$user.',"LATE",1,NOW());';
+				$query = 'insert into points (p_id,type,points,time) values('.$id.',"LATE",1,NOW());';
 			}
-			#echo "here3";
 			$result = $mysqli->query($query);
 		}
-		#echo "here4";
 	}
 }
 ?>

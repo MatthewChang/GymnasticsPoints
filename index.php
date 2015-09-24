@@ -4,7 +4,7 @@ function login() {
 	$.ajax({
 		url: "signin.php",
 		method: "POST",
-		data: {user: $("#user_id").val()}
+		data: {user: $("#user_input").val()}
 	}).done(function() {
 		get_signed_in();
 	});
@@ -65,40 +65,30 @@ $signed_in = [];
 $keys = [];
 $times = [];
 
-if(array_key_exists("user",$_POST)) {
-	$user = $_POST["user"];
-
-	if ($result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$user.';')) {
-		if($result->num_rows == 0) {
-			$query = 'insert into points (p_id,type,points,time) values('.$user.',"PRACTICE",2,NOW());';
-			if(date('Hi') > "1730") {
-				$query = 'insert into points (p_id,type,points,time) values('.$user.',"LATE",1,NOW());';
-			}
-			$result = $mysqli->query($query);
-		}
-	}
-}
 if(date('Hi') > "1730") {
 			echo "<b>You are now late.</b>";
 }
-
-if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time;')) {
-	while ($row = $result->fetch_assoc()) {
-		array_push($signed_in,$row["p_id"]);
-		array_push($keys,$row["entry_key"]);
-		array_push($times,$row["time"]);
-	}
-	$result->free();
-}
-
-
-$not_signed_in = array_diff(array_keys($people),$signed_in);
-echo '<form action="#"><select name="user">';
+echo'
+<label><input id="user_input" list="users" /></label>
+<datalist id="users">';
 foreach($not_signed_in as $id) {
-	echo '<option id="user_id" value="'.$id.'">'.$people[$id].'</option>';
+	echo '<option value="'.$people[$id].'">';
 }
+/*echo '
+  <option value="Chrome">
+  <option value="Firefox">
+  <option value="Internet Explorer">
+  <option value="Opera">
+  <option value="Safari">';*/
+  echo '</datalist>';
+
+/*$not_signed_in = array_diff(array_keys($people),$signed_in);
+echo '<form action="#"><select name="user" id="user_id">';
+foreach($not_signed_in as $id) {
+	echo '<option  value="'.$id.'">'.$people[$id].'</option>';
+}*/
 echo ' </select><button onclick="login()">Submit</button>';
-echo '</form>';
+#echo '</form>';
 echo "<h3>Signed In</h3>";
 echo '<div id="signed_in"></div>';
 /*for($i = 0; $i < sizeof($signed_in); $i++) {
