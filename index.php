@@ -3,16 +3,19 @@
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 <link rel="stylesheet" href="format.css" type="text/css" />
 
-  <link rel="stylesheet" href="css/custom.css">
-  <link rel="stylesheet" href="css/iosOverlay.css">
-  <link rel="stylesheet" href="css/prettify.css">
+<link rel="stylesheet" href="css/custom.css">
+<link rel="stylesheet" href="css/iosOverlay.css">
+<link rel="stylesheet" href="css/prettify.css">
+<link rel="stylesheet" href="css/jquery-ui.css">
 
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+
 <script src="js/iosOverlay.js"></script>
-  <script src="js/spin.min.js"></script>
-  <script src="js/prettify.js"></script>
-  <script src="js/custom.js"></script>
-  
+<script src="js/jquery-ui.js"></script>
+<script src="js/spin.min.js"></script>
+<script src="js/prettify.js"></script>
+<script src="js/custom.js"></script>
+
 <script type="text/javascript">
 function login() {
 	var loading = iosOverlay({
@@ -52,11 +55,44 @@ function get_signed_in() {
 		$("#signed_in").html(msg);
 	});
 }
+
+
+var availableTags = [
+	"ActionScript",
+	"AppleScript",
+	"Asp",
+	"BASIC",
+	"C",
+	"C++",
+	"Clojure",
+	"COBOL",
+	"ColdFusion",
+	"Erlang",
+	"Fortran",
+	"Groovy",
+	"Haskell",
+	"Java",
+	"JavaScript",
+	"Lisp",
+	"Perl",
+	"PHP",
+	"Python",
+	"Ruby",
+	"Scala",
+	"Scheme"
+];
+
+
 $( document ).ready(function() {
-  get_signed_in();
-  setInterval(get_signed_in,5000);
+	get_signed_in();
+	setInterval(get_signed_in,5000);
+	$( "#nameinput" ).autocomplete({
+		source: availableTags
+	});
 });
 </script>
+
+
 </head>
 <body>
 <?php
@@ -108,7 +144,7 @@ if(date('Hi') > "1730") {
 			echo '<div class="late">You are now late.</div>';
 }
 echo'
-<div id="form">
+<div id="form"><input id="nameinput"><br>
 <select id="user_input">';
 foreach($not_signed_in as $id) {
 	echo '<option value="'.$people[$id].'">'.$people[$id].'</option>';
@@ -137,4 +173,5 @@ echo '<div id="signed_in"></div>';
 	echo '<br>';
 }*/
 ?>
+  
 </body>
