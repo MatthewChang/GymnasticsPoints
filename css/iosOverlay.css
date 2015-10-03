@@ -3,30 +3,30 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 400px;
-  height: 400px;
-  margin-left: -200px;
-  margin-top: -200px;
+  width: 130px;
+  height: 130px;
+  margin-left: -65px;
+  margin-top: -65px;
   filter:progid:DXImageTransform.Microsoft.gradient(startColorstr=#cc000000,endColorstr=#cc000000);
   background: rgba(0,0,0,0.8);
-    -webkit-border-radius: 40px;
-    -moz-border-radius: 40px;
-    border-radius: 40px;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
 }
 .ui-ios-overlay .title {
   color: #FFF;
   font-weight: bold;
   text-align: center;
   display: block;
-  font-size: 70px;
+  font-size: 20px;
   position: absolute;
-  bottom: 65px;
+  bottom: 20px;
   left: 0;
   width: 100%;
 }
 .ui-ios-overlay img {
   display: block;
-  width: 150px;
+  width: 50px;
   margin: 20% auto 0 auto;
 }
 .ui-ios-overlay .spinner {

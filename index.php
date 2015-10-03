@@ -1,7 +1,25 @@
 <head>
+
+<?php 
+$pw = "bigredwill";
+$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
+if ($mysqli->connect_errno) {
+	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
+}
+
+$people = [];
+if ($result = $mysqli->query("select p_id, name from people order by name;")) {
+	while ($row = $result->fetch_assoc()) {
+		$people[$row["p_id"]] = $row["name"];
+	}
+	$result->free();
+}
+?>
+
 <link rel="stylesheet" href="reset.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 <link rel="stylesheet" href="format.css" type="text/css" />
+<link rel="stylesheet" href="format.css" type="text/css"/>
 
 <link rel="stylesheet" href="css/custom.css">
 <link rel="stylesheet" href="css/iosOverlay.css">
@@ -22,12 +40,13 @@ function login() {
 		text: "Loading",
 		duration: 1e5,
 		icon: "img/ring.gif"
-	});	
+	});
 	$.ajax({
 		url: "signin.php",
 		method: "POST",
-		data: {user: $("#user_input").val()}
+		data: {user: $("#nameinput").val()}
 	}).done(function(msg) {
+		$("#nameinput").val("");
 		loading.hide();
 		if(msg === "1") {			
 			iosOverlay({
@@ -58,28 +77,14 @@ function get_signed_in() {
 
 
 var availableTags = [
-	"ActionScript",
-	"AppleScript",
-	"Asp",
-	"BASIC",
-	"C",
-	"C++",
-	"Clojure",
-	"COBOL",
-	"ColdFusion",
-	"Erlang",
-	"Fortran",
-	"Groovy",
-	"Haskell",
-	"Java",
-	"JavaScript",
-	"Lisp",
-	"Perl",
-	"PHP",
-	"Python",
-	"Ruby",
-	"Scala",
-	"Scheme"
+<?php
+$str = "";
+foreach ($people as $id => $name) {
+	$str = $str.'"'.$name.'",';
+}
+$str = substr($str,0,-1);
+echo $str;
+?>
 ];
 
 
@@ -87,11 +92,17 @@ $( document ).ready(function() {
 	get_signed_in();
 	setInterval(get_signed_in,5000);
 	$( "#nameinput" ).autocomplete({
-		source: availableTags
+		source: availableTags,
+		select: function(event, ui) {
+			$("#nameinput").blur();
+			$(this).val(ui.item.value);
+			login();			
+		}
 	});
 });
 </script>
 
+<meta name='viewport' content='user-scalable=0'>
 
 </head>
 <body>
@@ -116,24 +127,12 @@ people(
 );
 
 */
-$pw = "bigredwill";
-date_default_timezone_set('America/New_York');
 
+date_default_timezone_set('America/New_York');
 echo '<title>Gymnastics Practice Sign In</title>';
 //echo '<div id="lightbox"><p>message</p></div>';
 echo "<h1>Practice Sign In</h1>";
-$mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
-if ($mysqli->connect_errno) {
-	echo "Failed to connect to MySQL: (" . $mysqli->connect_errno . ") " . $mysqli->connect_error;
-}
 
-$people = [];
-if ($result = $mysqli->query("select p_id, name from people order by name;")) {
-	while ($row = $result->fetch_assoc()) {
-		$people[$row["p_id"]] = $row["name"];
-	}
-	$result->free();
-}
 
 $not_signed_in = array_keys($people);
 $signed_in = [];
@@ -143,25 +142,7 @@ $times = [];
 if(date('Hi') > "1730") {
 			echo '<div class="late">You are now late.</div>';
 }
-echo'
-<div id="form"><input id="nameinput"><br>
-<select id="user_input">';
-foreach($not_signed_in as $id) {
-	echo '<option value="'.$people[$id].'">'.$people[$id].'</option>';
-}
-/*echo '
-  <option value="Chrome">
-  <option value="Firefox">
-  <option value="Internet Explorer">
-  <option value="Opera">
-  <option value="Safari">';*/
-  echo '</select>';
-
-/*$not_signed_in = array_diff(array_keys($people),$signed_in);
-echo '<form action="#"><select name="user" id="user_id">';
-foreach($not_signed_in as $id) {
-	echo '<option  value="'.$id.'">'.$people[$id].'</option>';
-}*/
+echo'<div id="form"><input id="nameinput"><br>';
 echo ' </select><br><button onclick="login()">Submit</button></div>';
 //echo '<button id="loading">Loading Spinner</button>      <button id="checkMark"">Success</button>      <button id="cross"">Error</button>';
 

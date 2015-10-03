@@ -20,6 +20,7 @@ h1 {
 	padding: 40;
 	
 }
+
 #form {
 	text-align: center;
 }
@@ -59,4 +60,43 @@ button {
 
 #signed_in p {
 	padding: 5;
+}
+
+
+
+@media only screen and (max-device-width: 480px) {
+	h1 {
+		font-size: 2.5em !important;
+		margin: 0;
+		padding: 10px;
+	}
+	.late {
+	}
+	button {
+		font-size: 1.5em;
+		padding: 5 7 7 7;
+		margin: 0;
+	}
+	input{
+		font-size: 1.5em !important;
+		padding:5;
+	}
+	
+	.title3{
+		font-size: 2.5em !important;
+		padding-top: 20;
+		padding-bottom: 0;
+		margin-bottom: 10;
+	}
+	
+	#signed_in {	
+		text-align: center;
+		font-size:1em;
+		margin: 0;
+		padding: 0;
+	}
+	
+	#signed_in p {
+		padding: 2;
+	}
 }
