@@ -18,7 +18,6 @@ $signed_in = [];
 $keys = [];
 $times = [];
 if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time DESC;')) {
-
 	while ($row = $result->fetch_assoc()) {
 		array_push($signed_in,$row["p_id"]);
 		array_push($keys,$row["entry_key"]);

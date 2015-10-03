@@ -71,13 +71,13 @@ button {
 		padding: 10px;
 	}
 	.late {
-		font-size: 1.5em;
+		font-size: 1.5em !important;
 		margin: 0 0 0 0;
 		padding: 0;
 	}
 	
 	button {
-		font-size: 1.5em;
+		font-size: 1.5em !important;
 		padding: 5 7 7 7;
 		margin: 0;
 	}
@@ -96,7 +96,7 @@ button {
 	
 	#signed_in {	
 		text-align: center;
-		font-size:1em;
+		font-size:1em !important;
 		margin: 0;
 		padding: 0;
 	}

@@ -140,7 +140,7 @@ echo '</div>';
 //echo '<button id="loading">Loading Spinner</button>      <button id="checkMark"">Success</button>      <button id="cross"">Error</button>';
 
 #echo '</form>';
-if(date('Hi') > "130") {
+if(date('Hi') > "1730" or (date('N') == 6 and date('Hi') > "1600")) {
 			echo '<div class="late">You are now late.</div>';
 }
 echo '<p class="title3">Signed In</p>';

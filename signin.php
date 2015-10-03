@@ -52,7 +52,7 @@ if(array_key_exists("user",$_POST)) {
 	if ($id > 0 and $result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$id.';')) {
 		if($result->num_rows == 0) {
 			$query = 'insert into points (p_id,type,points,time) values('.$id.',"PRACTICE",2,NOW());';
-			if(date('Hi') > "1730") {
+			if(date('Hi') > "1730" or (date('N') == 6 and date('Hi') > "1600")) {
 				$query = 'insert into points (p_id,type,points,time) values('.$id.',"LATE",1,NOW());';
 			}
 			$result = $mysqli->query($query);
