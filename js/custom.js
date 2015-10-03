@@ -27,6 +27,16 @@ $(document).on("click", "#cross", function(e) {
 });
 
 $(document).on("click", "#loading", function(e) {
+	iosOverlay({
+		text: "Loading",
+		duration: 2e3,
+		icon: "img/ring.gif"
+	});
+	return false;
+});
+
+/*
+$(document).on("click", "#loading", function(e) {
 	var opts = {
 		lines: 11, // The number of lines to draw
 		length: 45, // The length of each line
@@ -53,7 +63,7 @@ $(document).on("click", "#loading", function(e) {
 		spinner: spinner
 	});
 	return false;
-});
+});*/
 
 $(document).on("click", "#loadToSuccess", function(e) {
 	var opts = {

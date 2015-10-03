@@ -15,19 +15,32 @@
   
 <script type="text/javascript">
 function login() {
+	var loading = iosOverlay({
+		text: "Loading",
+		duration: 1e5,
+		icon: "img/ring.gif"
+	});	
 	$.ajax({
 		url: "signin.php",
 		method: "POST",
 		data: {user: $("#user_input").val()}
 	}).done(function(msg) {
-		if(msg === "1") {
+		loading.hide();
+		if(msg === "1") {			
 			iosOverlay({
 				text: "Success!",
 				duration: 1.5e3,
 				icon: "img/check.png"
-			});			
-			get_signed_in();
+			});	
+		} else {
+			iosOverlay({
+				text: "Error",
+				duration: 1.5e3,
+				icon: "img/cross.png"
+			});	
+			
 		}
+		get_signed_in();
 	});
 }
 
@@ -114,9 +127,7 @@ foreach($not_signed_in as $id) {
 	echo '<option  value="'.$id.'">'.$people[$id].'</option>';
 }*/
 echo ' </select><br><button onclick="login()">Submit</button></div>';
-echo '<button id="loading">Loading Spinner</button>
-      <button id="checkMark"">Success</button>
-      <button id="cross"">Error</button>';
+//echo '<button id="loading">Loading Spinner</button>      <button id="checkMark"">Success</button>      <button id="cross"">Error</button>';
 
 #echo '</form>';
 echo '<p class="title3">Signed In</p>';
