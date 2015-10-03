@@ -134,19 +134,15 @@ echo '<title>Gymnastics Practice Sign In</title>';
 echo "<h1>Practice Sign In</h1>";
 
 
-$not_signed_in = array_keys($people);
-$signed_in = [];
-$keys = [];
-$times = [];
-
-if(date('Hi') > "1730") {
-			echo '<div class="late">You are now late.</div>';
-}
 echo'<div id="form"><input id="nameinput"><br>';
-echo ' </select><br><button onclick="login()">Submit</button></div>';
+//echo '</select><br><button onclick="login()">Submit</button>';
+echo '</div>';
 //echo '<button id="loading">Loading Spinner</button>      <button id="checkMark"">Success</button>      <button id="cross"">Error</button>';
 
 #echo '</form>';
+if(date('Hi') > "130") {
+			echo '<div class="late">You are now late.</div>';
+}
 echo '<p class="title3">Signed In</p>';
 echo '<div id="signed_in"></div>';
 /*for($i = 0; $i < sizeof($signed_in); $i++) {

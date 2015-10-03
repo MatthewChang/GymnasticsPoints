@@ -67,11 +67,15 @@ button {
 @media only screen and (max-device-width: 480px) {
 	h1 {
 		font-size: 2.5em !important;
-		margin: 0;
+		margin: 20 0 10 0;
 		padding: 10px;
 	}
 	.late {
+		font-size: 1.5em;
+		margin: 0 0 0 0;
+		padding: 0;
 	}
+	
 	button {
 		font-size: 1.5em;
 		padding: 5 7 7 7;
@@ -80,11 +84,12 @@ button {
 	input{
 		font-size: 1.5em !important;
 		padding:5;
+		margin: 0 0 10 0;
 	}
 	
 	.title3{
-		font-size: 2.5em !important;
-		padding-top: 20;
+		font-size: 2em !important;
+		padding-top: 10;
 		padding-bottom: 0;
 		margin-bottom: 10;
 	}
