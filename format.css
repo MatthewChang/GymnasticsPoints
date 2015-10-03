@@ -1,0 +1,31 @@
+h1 {
+text-align: center;
+	font-size:55pt;
+}
+#form {
+	text-align: center;
+}
+.late {
+	text-align: center;
+	font-size: 36;
+	font-weight: bold;
+	color: red;
+	padding: 20px;
+}
+select {
+	font-size:50pt;
+}
+button {
+	margin: 20px;
+	margin-right: auto;
+	margin-left: auto;
+	font-size:50pt;
+}
+h3 {
+text-align: center;
+font-size:40pt;
+}
+#signed_in {
+	text-align: center;
+	font-size:35pt;
+}
