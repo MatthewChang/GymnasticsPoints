@@ -28,11 +28,11 @@ $(document).on("click", "#cross", function(e) {
 
 $(document).on("click", "#loading", function(e) {
 	var opts = {
-		lines: 13, // The number of lines to draw
-		length: 11, // The length of each line
-		width: 5, // The line thickness
-		radius: 17, // The radius of the inner circle
-		corners: 1, // Corner roundness (0..1)
+		lines: 11, // The number of lines to draw
+		length: 45, // The length of each line
+		width: 11, // The line thickness
+		radius: 45, // The radius of the inner circle
+		corners: 0, // Corner roundness (0..1)
 		rotate: 0, // The rotation offset
 		color: '#FFF', // #rgb or #rrggbb
 		speed: 1, // Rounds per second

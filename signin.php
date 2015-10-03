@@ -58,5 +58,11 @@ if(array_key_exists("user",$_POST)) {
 			$result = $mysqli->query($query);
 		}
 	}
+	
+	if ($id > 0 and $result = $mysqli->query('select p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") and p_id = '.$id.';')) {
+		if($result->num_rows > 0) {
+			echo "1";
+		}
+	}
 }
 ?>
