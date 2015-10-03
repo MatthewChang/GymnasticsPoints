@@ -1,26 +1,45 @@
+<head>
+<link rel="stylesheet" href="reset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
+<link rel="stylesheet" href="format.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/custom.css">
+  <link rel="stylesheet" href="css/iosOverlay.css">
+  <link rel="stylesheet" href="css/prettify.css">
+
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
+<script src="js/iosOverlay.js"></script>
+  <script src="js/spin.min.js"></script>
+  <script src="js/prettify.js"></script>
+  <script src="js/custom.js"></script>
+  
 <script type="text/javascript">
 function login() {
 	$.ajax({
 		url: "signin.php",
 		method: "POST",
 		data: {user: $("#user_input").val()}
-	}).done(function() {
+	}).done(function(msg) {
+		alert(msg);
 		get_signed_in();
 	});
 }
 
 function get_signed_in() {
+	var date = new Date();
 	$.ajax({
-		url: "signed_in.php"
+		url: "signed_in.php?time="+date.getTime()
 	}).done(function(msg) {
 		$("#signed_in").html(msg);
 	});
 }
 $( document ).ready(function() {
   get_signed_in();
+  setInterval(get_signed_in,5000);
 });
 </script>
+</head>
+<body>
 <?php
 /*
 MIT Gymnastics point entry site:
@@ -46,6 +65,7 @@ $pw = "bigredwill";
 date_default_timezone_set('America/New_York');
 
 echo '<title>Gymnastics Practice Sign In</title>';
+//echo '<div id="lightbox"><p>message</p></div>';
 echo "<h1>Practice Sign In</h1>";
 $mysqli = new mysqli("sql.mit.edu", "m_chang", $pw, "m_chang+gymnastics");
 if ($mysqli->connect_errno) {
@@ -66,13 +86,13 @@ $keys = [];
 $times = [];
 
 if(date('Hi') > "1730") {
-			echo "<b>You are now late.</b>";
+			echo '<div class="late">You are now late.</div>';
 }
 echo'
-<label><input id="user_input" list="users" /></label>
-<datalist id="users">';
+<div id="form">
+<select id="user_input">';
 foreach($not_signed_in as $id) {
-	echo '<option value="'.$people[$id].'">';
+	echo '<option value="'.$people[$id].'">'.$people[$id].'</option>';
 }
 /*echo '
   <option value="Chrome">
@@ -80,19 +100,21 @@ foreach($not_signed_in as $id) {
   <option value="Internet Explorer">
   <option value="Opera">
   <option value="Safari">';*/
-  echo '</datalist>';
+  echo '</select>';
 
 /*$not_signed_in = array_diff(array_keys($people),$signed_in);
 echo '<form action="#"><select name="user" id="user_id">';
 foreach($not_signed_in as $id) {
 	echo '<option  value="'.$id.'">'.$people[$id].'</option>';
 }*/
-echo ' </select><button onclick="login()">Submit</button>';
+echo ' </select><br><button onclick="login()">Submit</button></div>';
+echo '<button id="checkMark" class="btn">Success</button>';
 #echo '</form>';
-echo "<h3>Signed In</h3>";
+echo '<p class="title3">Signed In</p>';
 echo '<div id="signed_in"></div>';
 /*for($i = 0; $i < sizeof($signed_in); $i++) {
 	echo $people[$signed_in[$i]].' '.$times[$i];	
 	echo '<br>';
 }*/
 ?>
+</body>

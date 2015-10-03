@@ -3,6 +3,15 @@ body {
 	background-image: url("res/whitediamond.png");
     background-repeat: repeat;
 }
+/*
+#lightbox {
+	position: absolute;
+	z-index: -9000;
+}
+
+#lightbox p {
+	
+}*/
 
 h1 {
 	text-align: center;
