@@ -1,4 +1,8 @@
+<head>
+<link rel="stylesheet" href="reset.css" type="text/css" />
+<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans">
 <link rel="stylesheet" href="format.css" type="text/css" />
+
 <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
 <script type="text/javascript">
 function login() {
@@ -6,23 +10,27 @@ function login() {
 		url: "signin.php",
 		method: "POST",
 		data: {user: $("#user_input").val()}
-	}).done(function() {
+	}).done(function(msg) {
+		alert(msg);
 		get_signed_in();
 	});
 }
 
 function get_signed_in() {
+	var date = new Date();
 	$.ajax({
-		url: "signed_in.php"
+		url: "signed_in.php?time="+date.getTime()
 	}).done(function(msg) {
 		$("#signed_in").html(msg);
 	});
 }
 $( document ).ready(function() {
   get_signed_in();
-  setInterval(get_signed_in,3000);
+  setInterval(get_signed_in,5000);
 });
 </script>
+</head>
+<body>
 <?php
 /*
 MIT Gymnastics point entry site:
@@ -91,10 +99,11 @@ foreach($not_signed_in as $id) {
 }*/
 echo ' </select><br><button onclick="login()">Submit</button></div>';
 #echo '</form>';
-echo "<h3>Signed In</h3>";
+echo '<p class="title3">Signed In</p>';
 echo '<div id="signed_in"></div>';
 /*for($i = 0; $i < sizeof($signed_in); $i++) {
 	echo $people[$signed_in[$i]].' '.$times[$i];	
 	echo '<br>';
 }*/
 ?>
+</body>

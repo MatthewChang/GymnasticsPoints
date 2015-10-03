@@ -17,7 +17,7 @@ if ($result = $mysqli->query("select p_id, name from people order by name;")) {
 $signed_in = [];
 $keys = [];
 $times = [];
-if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time;')) {
+if ($result = $mysqli->query('select entry_key, p_id, time from points where time >= curdate() and (type = "LATE" or type = "PRACTICE") order by time DESC;')) {
 
 	while ($row = $result->fetch_assoc()) {
 		array_push($signed_in,$row["p_id"]);
@@ -27,7 +27,9 @@ if ($result = $mysqli->query('select entry_key, p_id, time from points where tim
 	$result->free();
 }
 for($i = 0; $i < sizeof($signed_in); $i++) {
-	echo $people[$signed_in[$i]].' '.$times[$i];
-	echo '<br>';
+	$time = preg_replace('/\d+-\d+-\d+/i',"",$times[$i]);
+	echo '<p>';
+	echo $people[$signed_in[$i]].' '.$time;
+	echo '</p>';
 }
 ?>

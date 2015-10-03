@@ -1,31 +1,48 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	background-image: url("res/whitediamond.png");
+    background-repeat: repeat;
+}
+
 h1 {
-text-align: center;
-	font-size:55pt;
+	text-align: center;
+	font-size:8em;
+	font-weight: bold;
+	padding: 40;
+	
 }
 #form {
 	text-align: center;
 }
 .late {
 	text-align: center;
-	font-size: 36;
+	font-size: 5em;
 	font-weight: bold;
 	color: red;
 	padding: 20px;
 }
 select {
-	font-size:50pt;
+	font-size:4.5em;
+	padding: 10;
 }
 button {
+	padding: 10 20 15 20;
 	margin: 20px;
-	margin-right: auto;
-	margin-left: auto;
-	font-size:50pt;
+	font-size:5em;
+	font-weight: bold;
 }
-h3 {
-text-align: center;
-font-size:40pt;
+.title3 {
+	text-align: center;
+	font-size:6em;
+	margin: auto;
+	padding: 0 0 40 0;
+	font-weight: bold;
 }
 #signed_in {
 	text-align: center;
-	font-size:35pt;
+	font-size:4em;
+}
+
+#signed_in p {
+	padding: 5;
 }
