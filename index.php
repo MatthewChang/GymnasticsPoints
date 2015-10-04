@@ -35,6 +35,10 @@ if ($result = $mysqli->query("select p_id, name from people order by name;")) {
 <script src="js/custom.js"></script>
 
 <script type="text/javascript">
+var tap_count = 0;
+var start_time = 0;
+var date = new Date();
+var pw;
 function login() {
 	var loading = iosOverlay({
 		text: "Loading",
@@ -67,7 +71,7 @@ function login() {
 }
 
 function get_signed_in() {
-	var date = new Date();
+	date = new Date();
 	$.ajax({
 		url: "signed_in.php?time="+date.getTime()
 	}).done(function(msg) {
@@ -87,6 +91,46 @@ echo $str;
 ?>
 ];
 
+function load_admin_page() {
+	$("#admin_page").fadeIn("slow");
+}
+
+function admin_login() {
+	$("#admin_sign_in").fadeIn("slow");
+}
+
+function admin_pw_check() {
+	pw = $("#admin_pw").val();
+	
+	var loading = iosOverlay({
+		text: "Loading",
+		duration: 1e5,
+		icon: "img/ring.gif"
+	});
+	
+	$.ajax({
+		url: "password_check.php",
+		method: "POST",
+		data: {pw: pw}
+	}).done(function(msg) {
+		loading.hide();
+		if(msg === "1") {
+			iosOverlay({
+				text: "Success!",
+				duration: 1.5e3,
+				icon: "img/check.png"
+			});	
+			load_admin_page();
+		} else {
+			iosOverlay({
+				text: "Error",
+				duration: 1.5e3,
+				icon: "img/cross.png"
+			});	
+		}		
+		$("#admin_sign_in").click();
+	});
+}
 
 $( document ).ready(function() {
 	get_signed_in();
@@ -98,6 +142,39 @@ $( document ).ready(function() {
 			$(this).val(ui.item.value);
 			login();			
 		}
+	});
+	
+	$("#title").click(function() {
+		load_admin_page();
+		
+		/*
+		date = new Date();
+		if(date.getTime() - start_time > 5000) {
+			tap_count = 0;
+			start_time = date.getTime();
+		}
+		tap_count++;
+		
+		if(tap_count >= 3) {
+			admin_login();
+		}
+		*/
+	});
+	
+	$("#admin_sign_in").click(function(e) {
+		if($(e.target).is("#admin_sign_in")) {
+			$("#admin_sign_in").hide();
+		}
+	})
+	
+	$("#admin_pw").keydown(function(event){
+		if(event.keyCode == 13){
+			admin_pw_check();
+		}
+	});
+	
+	$("#exit").click(function(event){
+		$("#admin_page").fadeOut("slow");
 	});
 });
 </script>
@@ -129,9 +206,11 @@ people(
 */
 
 date_default_timezone_set('America/New_York');
+echo '<div id="admin_page"><div id="exit">Exit</div></div>';
+echo '<div id="admin_sign_in"><div><input id="admin_pw" type="password"></div></div>';
 echo '<title>Gymnastics Practice Sign In</title>';
 //echo '<div id="lightbox"><p>message</p></div>';
-echo "<h1>Practice Sign In</h1>";
+echo '<h1 id="title">Practice Sign In</h1>';
 
 
 echo'<div id="form"><input id="nameinput"><br>';
