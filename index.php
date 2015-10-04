@@ -90,9 +90,51 @@ $str = substr($str,0,-1);
 echo $str;
 ?>
 ];
-
+function delete_entry(message,key) {
+	if(confirm(message)) {
+		var loading = iosOverlay({
+			text: "Loading",
+			duration: 1e5,
+			icon: "img/ring.gif"
+		});
+		$.ajax({
+			url: "delete_entry.php",
+			method: "POST",
+			data: {entry: key, pw: pw}
+		}).done(function(msg) {
+			loading.hide();
+			if(msg === "1") {			
+				iosOverlay({
+					text: "Success!",
+					duration: 1.5e3,
+					icon: "img/check.png"
+				});	
+			} else {
+				iosOverlay({
+					text: "Error",
+					duration: 1.5e3,
+					icon: "img/cross.png"
+				});	
+				
+			}
+			get_signed_in();
+			load_admin_page();
+		});
+	}	
+}
 function load_admin_page() {
 	$("#admin_page").fadeIn("slow");
+	date = new Date();
+	$.ajax({
+		url: "recent_points.php?time="+date.getTime(),
+		dataType: "json"
+	}).done(function(data) {
+		$("#admin_page_content").html("");
+		for(var i =0; i < data.length; i++) {
+			var message = 'Delete entry for '+data[i].points+' points for '+data[i].name+'?';
+			$("#admin_page_content").append('<p onclick="delete_entry(\''+message+'\','+data[i].key+')">'+data[i].name+" "+data[i].time+"</p>");
+		}
+	});
 }
 
 function admin_login() {
@@ -107,9 +149,9 @@ function admin_pw_check() {
 		duration: 1e5,
 		icon: "img/ring.gif"
 	});
-	
+	date = new Date();
 	$.ajax({
-		url: "password_check.php",
+		url: "password_check.php?time="+date.getTime(),
 		method: "POST",
 		data: {pw: pw}
 	}).done(function(msg) {
@@ -145,9 +187,6 @@ $( document ).ready(function() {
 	});
 	
 	$("#title").click(function() {
-		load_admin_page();
-		
-		/*
 		date = new Date();
 		if(date.getTime() - start_time > 5000) {
 			tap_count = 0;
@@ -158,7 +197,6 @@ $( document ).ready(function() {
 		if(tap_count >= 3) {
 			admin_login();
 		}
-		*/
 	});
 	
 	$("#admin_sign_in").click(function(e) {
@@ -206,7 +244,7 @@ people(
 */
 
 date_default_timezone_set('America/New_York');
-echo '<div id="admin_page"><div id="exit">Exit</div></div>';
+echo '<div id="admin_page"><div id="exit">Exit</div><div id="admin_page_content"></div></div>';
 echo '<div id="admin_sign_in"><div><input id="admin_pw" type="password"></div></div>';
 echo '<title>Gymnastics Practice Sign In</title>';
 //echo '<div id="lightbox"><p>message</p></div>';
